@@ -1,0 +1,6 @@
+{
+  "user-name": "baml-admin",
+  "description": "Admin user for BAML application",
+  "password": "baml",
+  "role": ["baml-poc-admin"]
+}

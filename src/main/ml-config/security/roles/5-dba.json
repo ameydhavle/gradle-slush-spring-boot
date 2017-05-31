@@ -1,0 +1,6 @@
+{
+  "role-name": "toughcorporation",
+  "description": "Role for ToughCorporation employees",
+  "role": ["rest-reader"],
+  "collection": [ "http://marklogic.com/program360" ]
+}

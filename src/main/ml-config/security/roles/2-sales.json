@@ -1,0 +1,6 @@
+{
+  "role-name": "sales",
+  "description": "Role for BAML sales employees",
+  "role": ["rest-writer"],
+  "collection": [ "Trades" ]
+}

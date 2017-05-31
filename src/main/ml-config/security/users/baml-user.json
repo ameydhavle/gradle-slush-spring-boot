@@ -1,0 +1,6 @@
+{
+  "user-name": "baml-user",
+  "description": "Regular user for BAML application",
+  "password": "baml",
+  "role": ["rest-reader", "rest-writer"]
+}

@@ -1,0 +1,6 @@
+{
+  "role-name": "dev",
+  "description": "Role for BAML developers",
+	"role": ["rest-admin"],
+  "collection": [ "SalesPersonNBK", "Staged", "Raw", "All" ]
+}
