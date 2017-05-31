@@ -54,4 +54,4 @@ You can also run the middle tier via an IDE like IntelliJ or Eclipse - just run 
 Spring boot slush application 
 
 Simple MarkLogic application generated using the slush template for spring-boot
->>>>>>> 0c73081a44f9c53fbc6b4baa33b5cff930997f90
+
