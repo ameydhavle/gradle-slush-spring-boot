@@ -1,3 +1,4 @@
+
 Assuming you just cloned this repository, here's how to deploy and run the application. 
 
 ## Prerequisites:
@@ -48,3 +49,9 @@ Here's the best way to do that:
 will automatically load new/modified MarkLogic modules, just like "gradle mlWatch". 
 
 You can also run the middle tier via an IDE like IntelliJ or Eclipse - just run the "App" program.
+=======
+# gradle-slush-spring-boot
+Spring boot slush application 
+
+Simple MarkLogic application generated using the slush template for spring-boot
+>>>>>>> 0c73081a44f9c53fbc6b4baa33b5cff930997f90
