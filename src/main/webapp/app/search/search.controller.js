@@ -5,13 +5,13 @@
   angular.module('app.search')
     .controller('SearchCtrl', SearchCtrl);
 
-  SearchCtrl.$inject = ['$scope', '$location', 'userService', 'MLSearchFactory'];
+  SearchCtrl.$inject = ['$scope', '$location', 'MLRest', 'userService', 'MLSearchFactory'];
 
   // inherit from MLSearchController
   var superCtrl = MLSearchController.prototype;
   SearchCtrl.prototype = Object.create(superCtrl);
 
-  function SearchCtrl($scope, $location, userService, searchFactory) {
+	function SearchCtrl($scope, $location, mlRest, userService, searchFactory) {
     var ctrl = this;
     ctrl.runMapSearch = false;
 
@@ -48,6 +48,15 @@
 		ctrl.mapBoundsChanged = function(bounds) {
 			ctrl.bounds = bounds;
 			ctrl.search();
+		};
+
+		ctrl.envelopePattern = function(){
+			var settingsGET = {
+				method:'PUT'
+			};
+			mlRest.extension('/envelope',settingsGET).then(function(response)  {
+				console.log("called extension");
+			});
 		};
 
 		ctrl.mapOptions = {

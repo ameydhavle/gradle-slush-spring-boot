@@ -9,7 +9,7 @@
       "document-content": {
         "update-kind": "create"
       },
-      "when": "post-commit"
+      "when": "pre-commit"
     }
   },
   "module": "ext/filter-docs.xqy",

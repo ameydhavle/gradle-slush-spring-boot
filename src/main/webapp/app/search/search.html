@@ -8,6 +8,7 @@
 
 <div class="search row" ng-if="ctrl.currentUser">
 	<div class="col-md-3 right-col">
+		<button class="button btn-sm btn-primary" ng-click="ctrl.envelopePattern()">Harmonize: Envelope Pattern</button>
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" ng-model="ctrl.runMapSearch" ng-change="ctrl.toggleMapSearch()">

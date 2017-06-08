@@ -105,6 +105,12 @@
         templateUrl: 'app/upload/upload.html',
         controller: 'uploaderCtrl',
         controllerAs: 'ctrl'
-      });
+      })
+			.state('root.migrate', {
+				url: '/migrate',
+				templateUrl: 'app/migrate/migrate.html',
+				controller: 'MigratorCtrl',
+				controllerAs: 'ctrl'
+			});
   }
 }());

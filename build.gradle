@@ -17,7 +17,7 @@ buildscript {
 plugins {
     id "java"
     id "eclipse"
-    id "com.marklogic.ml-gradle" version "2.2.0"
+    id "com.marklogic.ml-gradle" version "2.6.0"
 
     // For managing environment-sensitive properties - see https://github.com/stevesaliman/gradle-properties-plugin
     // id 'net.saliman.properties' version '1.4.5'
