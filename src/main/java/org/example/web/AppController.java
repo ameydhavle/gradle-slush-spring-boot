@@ -46,6 +46,11 @@ public class AppController implements ErrorController {
         return "index";
     }
 
+    // endpoint for tableau web data connector
+    @RequestMapping(value = "/tableau", method = RequestMethod.GET)
+    public String tableau() {
+        return "tableau";
+    }
     /**
      * The UI checks the user's login status via this endpoint.
      */
@@ -95,7 +100,7 @@ public class AppController implements ErrorController {
 
     /**
      * System-wide error handler.
-     * 
+     *
      * @param request
      * @return
      */

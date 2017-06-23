@@ -1,0 +1,149 @@
+<html>
+<meta http-equiv="Cache-Control" content="no-store" />
+<head>
+  <title>WDC for MarkLogic Sample Claims Data</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+  <script src="https://connectors.tableau.com/libs/tableauwdc-2.2.latest.js" type="text/javascript"></script>
+  <!-- Use to access cookie storage to grab access token -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.2/js.cookie.min.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+  	//<![CDATA[
+  (function() {
+
+    function buildUri(searchText) {
+      return '/v1/resources/tableau?rs:q=' + encodeURIComponent(searchText);
+    }
+
+    function isLoggedIn() {
+      var loggedIn = false;
+      $.ajax({
+          type: 'GET',
+          async: false,
+          url: '/api/user/status',
+          dataType: 'json',
+          success: function (data) {
+            loggedIn = (data) ? data.authenticated : false;
+          }
+      });
+      return loggedIn;
+    }
+
+    var myConnector = tableau.makeConnector();
+
+    myConnector.init = function(initCallback) {
+      var session = Cookies.get('baml-pocsessionid');
+      if (tableau.password && tableau.password.length) {
+        Cookies.set('baml-pocsessionid', tableau.password);
+      }
+      var hasAuth = isLoggedIn();
+      if (tableau.phase == tableau.phaseEnum.interactivePhase ||
+          tableau.phase == tableau.phaseEnum.authPhase) {
+        if (hasAuth) {
+           tableau.password = session;
+           if (tableau.phase == tableau.phaseEnum.authPhase) {
+               // Auto-submit here if we are in the auth phase
+               tableau.submit()
+           }
+       	}
+   		}
+      initCallback();
+  	};
+
+  	myConnector.getSchema = function(schemaCallback) {
+  	    var schema = [];
+
+  	    var col1 = { id: "job_title", dataType: "string"};
+  	    var col2 = { id: "lat", dataType: "float"};
+  	    var col3 = { id: "lon", dataType: "float"};
+  	    var col4 = { id: "company_name", dataType: "string"};
+  	    var col5 = { id: "city", dataType: "string"};
+  	    var col6 = { id: "country", dataType: "string"};
+  	    var col7 = { id: "first_name", dataType: "string"};
+  	    var col8 = { id: "last_name", dataType: "string"};
+  	    var col9 = { id: "pay", dataType: "float"};
+  	    var cols = [col1, col2, col3, col4, col5,
+  	    	 col6, col7, col8, col9];
+
+  	    var tableInfo = {
+  	      id: "PeopleTable",
+  	      columns: cols
+  	    }
+
+  	    schema.push(tableInfo);
+
+  	    schemaCallback(schema);
+  	};
+
+    myConnector.getData = function(table, doneCallback) {
+        var dataToReturn = [];
+        var hasMoreData = false;
+
+        // Get parameter values and build YQL query
+        var searchText = tableau.connectionData;
+        var connectionUri = buildUri(searchText);
+
+        var xhr = $.ajax({
+          type: 'GET',
+          url: connectionUri,
+          dataType: 'jsonp',
+          jsonp:'rs:callback',
+        	statusCode: {
+          	401: function onUnauthorized(jqXHR, textStatus, errorThrown) {
+            	tableau.abortForAuth(textStatus + ": " + errorThrown);
+          	}
+        	},
+          success: function (data) {
+            var total = data.total;
+            table.appendRows(data.results);
+            doneCallback();
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            tableau.abortWithError(xhr.responseText);
+          }
+        });
+      };
+      tableau.registerConnector(myConnector);
+  })();
+
+  function login(callback) {
+    $.ajax({
+          type: 'POST',
+          url: '/api/user/login',
+          data: $('#submit-form').serialize(),
+        	statusCode: {
+          	401: function onUnauthorized(jqXHR, textStatus, errorThrown) {
+            	tableau.abortForAuth(textStatus + ": " + errorThrown);
+          	}
+        	},
+          success: function (data) {
+            callback();
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            tableau.abortWithError(xhr.responseText);
+          }
+        });
+  }
+
+  $(document).ready(function() {
+
+    $("#submitButton").click(function() {
+      var searchText = $('#searchText').val().trim();
+      tableau.connectionName = "Searched For '" + searchText + "'";
+      tableau.connectionData = searchText;
+
+      login(tableau.submit);
+    });
+  });
+  //]]>
+</script>
+</head>
+<body>
+ <form id="submit-form" th:action="@{/login}">
+   <p>Username: <input name="username" id="username"  /></p>
+   <p>Password: <input name="password" id="password" type="password" /></p>
+   <p>Search: <input name="searchText" id="searchText" /></p>
+   <p><button type="button" id="submitButton">Get the Data</button></p>
+ </form>
+</body>
+</html>
