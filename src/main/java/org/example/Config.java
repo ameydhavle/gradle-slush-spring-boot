@@ -48,7 +48,7 @@ public class Config extends WebSecurityConfigurerAdapter {
 
     /**
      * We seem to need this defined as a bean; otherwise, aspects of the default Spring Boot security will still remain.
-     * 
+     *
      * @return
      */
     @Bean
@@ -71,7 +71,7 @@ public class Config extends WebSecurityConfigurerAdapter {
     /**
      * Configures what requests require authentication and which ones are always permitted. Uses CorsRequestMatcher to
      * allow for certain requests - e.g. put/post/delete requests - to be proxied successfully back to MarkLogic.
-     * 
+     *
      * This uses a form login by default, as for many MarkLogic apps (particularly demos), it's convenient to be able to
      * easily logout and login as a different user to show off security features. Spring Security has a very plain form
      * login page - you can customize this, just google for examples.
@@ -86,11 +86,11 @@ public class Config extends WebSecurityConfigurerAdapter {
     /**
      * Defines a set of URLs that are always permitted - these are based on the presumed contents of the
      * src/main/resources/static directory.
-     * 
+     *
      * @return
      */
     protected String[] getAlwaysPermittedPatterns() {
-        return new String[] { "/bower_components/**", "/fonts/**", "/images/**", "/styles/**" };
+        return new String[] { "/tableau", "/bower_components/**", "/fonts/**", "/images/**", "/styles/**" };
     }
 
 }

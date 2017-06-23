@@ -1,0 +1,88 @@
+<export><workspace name="MOCK CSV TDE"><query name="TDE Template Insert" focus="true" listorder="1" taborder="1" active="true" database="3072424385362491423" server="487727410011006711" database-name="baml-poc-content" server-name="baml-poc" mode="javascript">'use strict';
+declareUpdate();
+var tde = require("/MarkLogic/tde.xqy");
+
+var template = xdmp.toJSON(
+{
+  "template":{
+    "context":"/id",
+    "enabled": true,
+    "rows":[
+      {
+        "schemaName":"example",
+        "viewName":"People",
+        "columns":[
+          {
+            "name":"id",
+            "scalarType":"long",
+            "val":"."
+          },
+          {
+            "name":"FIRST_NAME",
+            "scalarType":"string",
+            "val":"../first_name"
+          },
+          {
+            "name":"LAST_NAME",
+            "scalarType":"string",
+            "val":"../last_name"
+          },
+          {
+            "name":"EMAIL",
+            "scalarType":"string",
+            "val":"../email"
+          },
+          {
+            "name":"GENDER",
+            "scalarType":"string",
+            "val":"../gender"
+          },
+          {
+            "name":"IP_ADDRESS",
+            "scalarType":"string",
+            "val":"../ip_address"
+          },
+          {
+            "name":"COMPANY",
+            "scalarType":"string",
+            "val":"../company_name"
+          },
+          {
+            "name":"CITY",
+            "scalarType":"string",
+            "val":"../city"
+          },
+          {
+            "name":"COUNTRY",
+            "scalarType":"string",
+            "val":"../country"
+          },
+          {
+            "name":"JOB_TITLE",
+            "scalarType":"string",
+            "val":"../job_title"
+          },
+          {
+            "name":"PAY",
+            "scalarType":"double",
+            "val":"../pay"
+          },
+          {
+            "name":"LAT",
+            "scalarType":"double",
+            "val":"../lat"
+          },
+          {
+            "name":"LON",
+            "scalarType":"double",
+            "val":"../lon"
+          }
+        ]
+      }
+    ]
+  }
+}
+);
+
+tde.templateInsert("/tde/template.json", template);
+</query><query name="SQL Query TDE" focus="false" listorder="3" taborder="3" active="true" database="3072424385362491423" server="487727410011006711" database-name="baml-poc-content" server-name="baml-poc" mode="sql">SELECT * FROM example.People LIMIT 10;</query></workspace></export>
